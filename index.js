@@ -1,5 +1,4 @@
 /* eslint-disable no-restricted-syntax */
-
 /** @format */
 const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 const operators = ["+", "-", "x", "/"];
@@ -7,17 +6,54 @@ let screenObject = {
   array1: [],
   operator: [],
   array2: [],
+  output: function (sum) {
+    const screen = document.querySelector("#screen");
+    screen.textContent = sum;
+    console.log(screenObject);
+  },
 };
+
+function add(arrayOne, arrayTwo) {
+  let sum = arrayOne + arrayTwo;
+  screenObject.output(sum);
+  console.log(`this is ${arrayOne}`);
+}
+function subtract(arrayOne, arrayTwo) {
+  let sum = arrayOne - arrayTwo;
+  screenObject.output(sum);
+}
+function divide(arrayOne, arrayTwo) {
+  let sum = arrayOne / arrayTwo;
+  screenObject.output(sum);
+}
+
+function multiply(arrayOne, arrayTwo) {
+  let sum = arrayOne * arrayTwo;
+  screenObject.output(sum);
+}
+
+function filterOperators() {
+  const arrayOneInt = parseFloat(screenObject.array1.join(""));
+  const arrayTwoInt = parseFloat(screenObject.array2.join(""));
+  console.log(`this is a ${screenObject.array1.join("")}`);
+  if (screenObject.operator == "+") {
+    add(arrayOneInt, arrayTwoInt);
+  } else if (screenObject.operator == "-") {
+    subtract(arrayOneInt, arrayTwoInt);
+  } else if (screenObject.operator == "/") {
+    divide(arrayOneInt, arrayTwoInt);
+  } else if (screenObject.operator == "x") {
+    multiply(arrayOneInt, arrayTwoInt);
+  }
+}
 
 function clear(obj) {
   for (const key in obj) {
-    if (obj[key].length > 0) {
-      console.log(`length of object key is: ${obj[key].length}`);
+    if (typeof obj[key] === "object") {
       obj[key] = [];
     }
   }
   initialDisplay();
-  console.log(screenObject);
 }
 
 function deleteNumbers() {
@@ -47,13 +83,13 @@ function changeDisplay() {
 function numberInput(input) {
   if (screenObject.operator.length === 0) {
     screenObject.array1.push(input);
+    console.table(screenObject.array1);
     changeDisplay();
     console.log(screenObject);
   } else if (screenObject.operator.length === 1) {
     screenObject.array2.push(input);
     changeDisplay();
   }
-  console.log(screenObject);
 }
 function operatorInput(input) {
   if (screenObject.array1.length > 0 && screenObject.operator.length === 0) {
@@ -72,9 +108,9 @@ function events() {
       } else if (operators.some((operator) => operator === button.id)) {
         operatorInput(button.id);
       } else if (button.id === "=") {
-        //adsf
+        filterOperators();
       } else if (button.id === ".") {
-        //asdf
+        numberInput(button.id);
       } else if (button.id === "clear") {
         clear(screenObject);
       } else if (button.id === "delete") {
