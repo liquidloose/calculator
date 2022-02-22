@@ -1,27 +1,41 @@
 /* eslint-disable no-restricted-syntax */
 /** @format */
+
 const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 const operators = ["+", "-", "x", "/"];
+
 let screenObject = {
   array1: [],
   operator: [],
   array2: [],
   output: function (sum) {
-    const screen = document.querySelector("#screen");
-    screen.textContent = sum;
-    console.log(screenObject);
+    if (sum) {
+      let trimmedSum = sum.toFixed(10);
+      const screen = document.querySelector("#screen");
+      screen.textContent = trimmedSum;
+      console.log(screenObject);
+      sumToArray(trimmedSum);
+    }
   },
 };
+
+function sumToArray(sum) {
+  screenObject.array1[0] = sum;
+  screenObject.operator = [];
+  screenObject.array2 = [];
+}
 
 function add(arrayOne, arrayTwo) {
   let sum = arrayOne + arrayTwo;
   screenObject.output(sum);
   console.log(`this is ${arrayOne}`);
 }
+
 function subtract(arrayOne, arrayTwo) {
   let sum = arrayOne - arrayTwo;
   screenObject.output(sum);
 }
+
 function divide(arrayOne, arrayTwo) {
   let sum = arrayOne / arrayTwo;
   screenObject.output(sum);
@@ -66,6 +80,7 @@ function deleteNumbers() {
   }
   changeDisplay();
 }
+
 function initialDisplay() {
   const screen = document.querySelector("#screen");
   screen.textContent = "0";
@@ -91,6 +106,7 @@ function numberInput(input) {
     changeDisplay();
   }
 }
+
 function operatorInput(input) {
   if (screenObject.array1.length > 0 && screenObject.operator.length === 0) {
     screenObject.operator.push(input);
@@ -119,5 +135,6 @@ function events() {
     });
   });
 }
+
 initialDisplay();
 events();
